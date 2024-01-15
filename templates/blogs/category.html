@@ -1,0 +1,44 @@
+{% extends 'Base.html'%}
+
+{% block title %} Blog-Category  {% endblock %}
+
+{% block contant %}
+
+{% load static %}
+
+<div class="container mt-3">
+    <div class="row">
+
+    {% for i in posts %}
+        <div class="col-sm-6">
+            <div class="card mt-2">
+        <div class="row no-gutters mt-3">
+        <div class="col-md-4">
+        <img src="{{i.image.url}}" class="card-img" alt="...">
+        </div>
+         <div class="col-md-8">
+        <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longerg gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          <a href="{% url 'details' i.slug %}" class="btn btn-primary">Read more</a>
+
+      </div>
+    </div>
+  </div>
+            </div>
+        </div>
+
+        {% empty %}
+                             <div class="container">
+
+                         <img src="{% static 'image/img1.gif'%}" style="width:100%;" class="img-fluid" alt="404_page_not_found">
+                             </div>
+
+    {% endfor %}
+</div>
+</div>
+
+
+
+{% endblock %}

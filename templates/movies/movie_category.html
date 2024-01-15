@@ -1,0 +1,29 @@
+{% extends 'Base.html'%}
+
+{% block title %} Movies-Category {% endblock %}
+
+{% block contant %}
+
+{% load static %}
+
+
+ <div class="container">
+
+    <div class="row">
+        {% for i in cours %}
+      <div class="col-sm-4">
+       <div class="card m-2">
+        <img src="{{i.thumbnail.url}}" alt="" class="card-img-top" height="200px">
+        <div class="card-footer">
+            <p class="card-text">{{i.category}} : {{i.title}}</p>
+           <p class="card-text"><small class="text-muted">{{i.created_at}}</small></p>
+          <a href="{% url 'moviesdetails' i.slug %}" class="btn btn-primary">Watch Now</a>
+        </div>
+       </div>
+      </div>
+        {% endfor %}
+    </div>
+   </div>
+
+
+{% endblock %}

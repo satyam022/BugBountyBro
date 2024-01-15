@@ -1,0 +1,149 @@
+{% extends 'Base.html'%}
+
+{% block title %} Movie-Details {% endblock %}
+
+{% block contant %}
+
+{% load static %}
+
+
+
+
+
+    <!-- Page content-->
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">Enjoy Your Movie!</h1>
+                            <!-- Post meta content-->
+                            <!-- Post categories-->
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#">{{movie.category}}</a>
+
+                        </header>
+
+                          <video controls="controls" class="img-fluid" autoplay loop muted>
+                                          <source src="{{movie.video.url}}" type="video/mp4" />
+                          </video>
+                         <p class="card-text"><small class="text-muted">{{movie.created_at}}</small></p>
+                        <h2 class="fw-bolder mb-4 mt-5">{{movie.title|safe}}</h2>
+                         <p class="card-text">Language : {{movie.Language|safe}}</p>
+
+                        <!-- Post content-->
+                    </article>
+
+
+                     <br>
+                      <br>
+                    <br>
+                    <br>
+
+
+                    <!-- Comments section-->
+                    <section class="mb-5">
+                        <div class="card bg-light">
+                            <div class="card-body">
+
+                                 <form method="POST" class="bg-light">
+                                    {% csrf_token %}
+                                       <div class="form-group">
+                                        <textarea name="comm" id="message" cols="30" rows="3" placeholder="comment" class="form-control"></textarea>
+                                       </div>
+
+                                    <div class="form-group">
+                                    <input type="submit" value="Post Comment" class="btn btn-primary ">
+                                    </div>
+
+                                  </form>
+
+                                <!-- Comment with nested comments-->
+                                 {% for cm in comments %}
+                                <div class="d-flex mb-4">
+                                    <!-- Parent comment-->
+                                    <div class="flex-shrink-0"><img src="{% static 'image/R.png' %}" class="rounded-circle" alt="..." width="55" height="55" /></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">{{cm.0.user.username}}</div>
+                                                     {{cm.0.comm}}
+                                        <p id="{{cm.0.id}}"><button onclick="ReplyForm('{{cm.0.id}}')" class="reply">Reply</button>
+
+                                        {% for subc in cm.1 %}
+                                        <!-- Child comment 1-->
+                                        <div class="d-flex mt-4">
+                                            <div class="flex-shrink-0"><img src="{% static 'image/R1.jpeg' %}" class="rounded-circle" alt="..." width="55" height="55"/></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold">{{subc.user.username}}</div>
+                                                      {{subc.comm}}
+                                            </div>
+                                        </div>
+                                         {% endfor %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                               <!-- END comment-list -->
+                    <script type="text/javascript">
+                      function ReplyForm(id) {
+                        let elm = `<form method="POST" class="p-5 bg-light">
+                                    {% csrf_token %}
+                        <div class="form-group">
+                        <input type='text' value='${id}' name = 'comm_id' style="display:none;" readonly/>
+                          <label for="message">Comment</label>
+                          <textarea name="comm" id="message" cols="30" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <input type="submit" value="Post Comment" class="btn btn-primary py-3">
+                        </div>
+
+                      </form>`;
+                      document.getElementById(id).innerHTML = elm;
+                      }
+                    </script>
+                        </div>
+                    </section>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Movies Categories</div>
+                        <div class="card-body">
+                            <div class="row">
+
+                               {% for i in list%}
+
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+
+                                        <li><a href="{% url 'moviescategory' i.slug %}">{{i.category}}</a></li>
+
+                                    </ul>
+                                </div>
+
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Importent update</div>
+                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+{% endblock %}

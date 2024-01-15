@@ -1,0 +1,97 @@
+
+{% extends 'Base.html'%}
+
+{% block title %} Tutorials {% endblock %}
+
+{% block contant %}
+
+{% load static %}
+
+<style>
+.news-content{
+
+  display: flex;
+  background-color:red;
+}
+
+marquee {
+  flex: 1;
+}
+</style>
+
+<div class="container mt-3"> <div class="ticker"> <div class="title"><h5>Breaking News</h5></div>
+    <div class="news">
+        <marquee class="news-content">
+          {% for n in news %}
+            {{ n.title }} &nbsp;&nbsp;&nbsp;
+        {% endfor %}
+        </marquee>
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <br>
+    <div class="row">
+        {% for course in cours %}
+        <div class="col mx-auto">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img class="card-img-top" src="{{course.image.url}}" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text"><small class="text-muted">{{course.created_at}}</small></p>
+                    <h5 class="card-title">{{course.topic}}</h5>
+                    <p class="card-text"><small class="text-muted"> Language : Hindi</small></p>
+
+                    <p class="card-text m-0 p-0">
+                        <span class="price">
+                            <del>Price :</del>
+                            &nbsp;
+                            <span>Free</span>
+                        </span>
+
+                    </p>
+                </div>
+
+                <div class="card-footer p-0">
+
+                    <div class="row no-gutters">
+
+                        <div class="col border-right">
+                            <a href="/tutorialdetails/{{course.slug}}" class="btn btn-light btn-block">Start Course</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+ <div class="container justify-content-center mt-2">
+
+
+             <nav aria-label="Page navigation example">
+
+               <ul class="pagination">
+                   {% if cours.has_previous %}
+                   <li class="page-item"><a class="page-link" href="?page={{cours.previous_page_number}}">Previous</a></li>
+                   {% endif %}
+
+                   <li class="page-item"><a class="page-link"><span>{{cours.number}}</span></a></li>
+
+                   {% if cours.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{cours.next_page_number}}">Next</a></li>
+                   {% endif %}
+               </ul>
+
+             </nav>
+ </div>
+
+
+
+{% endblock %}

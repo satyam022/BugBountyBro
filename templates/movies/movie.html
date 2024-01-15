@@ -1,0 +1,76 @@
+{% extends 'Base.html'%}
+
+{% block title %} Movies {% endblock %}
+
+{% block contant %}
+
+{% load static %}
+
+<style>
+
+.news-content{
+
+  display: flex;
+  background-color:red;
+}
+
+marquee {
+  flex: 1;
+}
+</style>
+
+<div class="container mt-3"> <div class="ticker"> <div class="title"><h5>Breaking News</h5></div>
+    <div class="news">
+        <marquee class="news-content">
+          {% for n in news %}
+            {{ n.ntitle }} &nbsp;&nbsp;&nbsp;
+        {% endfor %}
+        </marquee>
+    </div>
+</div>
+</div>
+
+
+ <div class="container">
+
+    <div class="row">
+        {% for i in movie %}
+      <div class="col-sm-4">
+       <div class="card m-2">
+        <img src="{{i.thumbnail.url}}" alt="" class="card-img-top" height="200px">
+        <div class="card-footer">
+            <p class="card-text">{{i.category}} : {{i.title}}</p>
+           <p class="card-text"><small class="text-muted">{{i.created_at}}</small></p>
+          <a href="{% url 'moviesdetails' i.slug %}" class="btn btn-primary">Watch Now</a>
+        </div>
+       </div>
+      </div>
+        {% endfor %}
+    </div>
+   </div>
+
+
+
+
+ <div class="container justify-content-center mt-2">
+
+
+             <nav aria-label="Page navigation example">
+
+               <ul class="pagination">
+                   {% if movie.has_previous %}
+                   <li class="page-item"><a class="page-link" href="?page={{movie.previous_page_number}}">Previous</a></li>
+                   {% endif %}
+
+                   <li class="page-item"><a class="page-link"><span>{{movie.number}}</span></a></li>
+
+                   {% if movie.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{movie.next_page_number}}">Next</a></li>
+                   {% endif %}
+               </ul>
+
+             </nav>
+ </div>
+
+
+{% endblock %}

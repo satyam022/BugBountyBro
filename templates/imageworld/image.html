@@ -1,0 +1,73 @@
+{% extends 'Base.html'%}
+
+{% block title %} Photography {% endblock %}
+
+{% block contant %}
+
+{% load static %}
+
+<div class="container mt-2">
+
+
+
+    <div class="py-5 text-center bg-secondary text-white">
+     <h1 class="mb-3">Upload Image</h1>
+
+     <form action="" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         {{form}}
+      <input type="submit" class="btn btn-danger" value="Upload">
+     </form>
+    </div>
+
+    <div class="row ">
+
+        {% for i in image %}
+       <div class="col-sm-4 ">
+        <div class="card m-2" style="width: 21rem;">
+             <img src="{{i.file.url}}" class="card-img-top" alt="...">
+           <div class="card-body">
+                <p class="card-title">{{i.title|safe}}</p>
+                <div class="form-group mt-0 pt-0  m-2">
+                <a class="btn btn-outline-primary   btn-d "  href="{{ i.file.url }}"  download type="submit"><i class="fas fa-download"></i>Download</a>
+          </div>
+        </div>
+        </div>
+       </div>
+        {% empty %}
+        No Data Found
+         {% endfor %}
+
+
+    </div>
+
+</div>
+
+
+<!-- pagination -->
+
+ <div class="container justify-content-center mt-2">
+
+
+             <nav aria-label="Page navigation example">
+
+               <ul class="pagination">
+                   {% if image.has_previous %}
+                   <li class="page-item"><a class="page-link" href="?page={{post.previous_page_number}}">Previous</a></li>
+                   {% endif %}
+
+                   <li class="page-item"><a class="page-link"><span>{{image.number}}</span></a></li>
+
+                   {%if image.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{image.next_page_number}}">Next</a></li>
+                   {% endif %}
+               </ul>
+
+             </nav>
+ </div>
+
+<!-- endpagination -->
+
+
+
+{% endblock %}
