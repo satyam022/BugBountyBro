@@ -1,11 +1,7 @@
 import os
 from .info import *
 from pathlib import Path
-import environ
-import dj_database_url
-env = environ.Env()
 
-environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,6 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+j%+fd3o&y&5o+@@vifyk1jdgpq1as&_5x4cgoll)m&la@__!g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
 
 
@@ -78,18 +75,14 @@ WSGI_APPLICATION = 'bugbountybro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-
-    'default': dj_database_url.parse(env('DATABASE_URL'))
-
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+
 
 
 
